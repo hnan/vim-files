@@ -2,36 +2,37 @@
 " Credits to the VIM community for many of the smart things in this file
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins to install
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" pathogen      --- https://github.com/tpope/vim-pathogen
-" Command-T     --- http://www.vim.org/scripts/script.php?script_id=3025
-" bufexplorer   --- http://www.vim.org/scripts/script.php?script_id=42
-" nerdtree      --- https://github.com/scrooloose/nerdtree
-" Ack           --- https://github.com/mileszs/ack.vim
-" syntastic     --- https://github.com/scrooloose/syntastic
-" SuperTab      --- http://www.vim.org/scripts/script.php?script_id=1643
-" snipmate      --- https://github.com/msanders/snipmate.vim
-" nerdcommenter --- https://github.com/scrooloose/nerdcommenter
-" Powerline     --- https://github.com/Lokaltog/vim-powerline
-" zencoding-vim --- https://github.com/mattn/zencoding-vim
-" vim-jade      --- https://github.com/digitaltoad/vim-jade
-" html5.vim     --- https://github.com/othree/html5.vim
-" vim-less      --- https://github.com/groenewege/vim-less
-" fugitive      --- https://github.com/tpope/vim-fugitive
-" solzrized     --- https://github.com/altercation/vim-colors-solarized
-
-" Note that Command-T requires ruby and the version of ruby linked with VIM 
-" must be the same version you build Command-T
-" Check ruby version with :ruby puts RUBY_VERSION
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 set nocompatible
 
-call pathogen#infect()
-call pathogen#helptags()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins with vundle
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+
+Bundle 'scrooloose/nerdtree'
+" Command-T not work on windows http://rfbrazier.posterous.com/installing-the-command-t-vim-plugin-on-window
+"Bundle 'wincent/Command-T'
+Bundle 'kien/ctrlp.vim'
+" Remember to include git in path when install msysgit on Windwos.
+Bundle 'tpope/vim-fugitive'
+" Make ack work on windows http://stackoverflow.com/a/4792583/375230
+Bundle 'mileszs/ack.vim'
+Bundle 'bufexplorer.zip'
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'scrooloose/syntastic'
+Bundle 'msanders/snipmate.vim'
+Bundle 'mattn/zencoding-vim'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'othree/html5.vim'
+Bundle 'groenewege/vim-less'
+Bundle 'altercation/vim-colors-solarized'
+
+filetype plugin indent on
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -73,8 +74,8 @@ nmap <S-Tab> gT
 nnoremap <silent> <C-t> :tabnew<CR>
 
 " Buffer
-noremap <C-tab> :bn<CR>
-noremap <C-S-tab> :bp<CR>
+noremap <Space> :bn<CR>
+noremap <S-Space> :bp<CR>
 
 " Omni completion
 inoremap ,c <C-x><C-o>
@@ -92,8 +93,13 @@ let g:NERDTreeShowBookmarks = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Easier vimrc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-noremap <Leader><Leader>s :so ~/.vimrc<CR>
-noremap <Leader><Leader>v :tabe ~/.vimrc<CR>
+if has('win32')
+    noremap <Leader><Leader>s :so ~/_vimrc<CR>
+    noremap <Leader><Leader>v :tabe ~/_vimrc<CR>
+else
+    noremap <Leader><Leader>s :so ~/.vimrc<CR>
+    noremap <Leader><Leader>v :tabe ~/.vimrc<CR>
+endif
 
 
 
@@ -108,12 +114,17 @@ set showcmd                    " show partial commands
 set wrap                       " wrap too long lines
 set laststatus=2               " always show status line
 
-colorscheme solarized
-if has('gui_running')
-    set background=dark
+
+if has('win32')
+    colorscheme murphy
 else
-    set background=dark
+    colorscheme solarized
 endif
+"if has('gui_running')
+    "set background=dark
+"else
+    "set background=dark
+"endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
